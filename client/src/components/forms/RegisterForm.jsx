@@ -21,7 +21,7 @@ const RegisterForm = (props) => {
       loginDetails: res,
       personalDetails: personalData,
     });
-    props.pageDashHandler(res);
+    props.loginDataHandler(res);
   };
   const backHandler = () => {
     setDetailsValid(false);
@@ -30,13 +30,12 @@ const RegisterForm = (props) => {
     <React.Fragment>
       {!detailsValid && (
         <PersonalDetails
-          loginHandler={props.loginHandler}
+          loginDisplayHandler={props.loginDisplayHandler}
           personalDataHandler={personalDataHandler}
         />
       )}
       {detailsValid && (
         <RegistrationDetails
-          loginHandler={props.loginHandler}
           personalDetailsBackHandler={backHandler}
           loginDataHandler={loginDataHandler}
         />

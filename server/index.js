@@ -26,7 +26,6 @@ app.post("/login", (req, res) => {
   const sqlLoginQuery =
     "SELECT * FROM login_details WHERE username = ? AND password = ?;";
   db.query(sqlLoginQuery, [username, password], (err, result) => {
-    console.log(result);
     res.send(result);
   });
 });
@@ -34,8 +33,6 @@ app.post("/login", (req, res) => {
 app.post("/register", (req, res) => {
   const login = req.body.loginDetails;
   const personal = req.body.personalDetails;
-  console.log(login);
-  console.log(personal);
   res.send("Successful");
   const loginRegisterQuery =
     "INSERT INTO login_details VALUES( ? , ? , ? , ? );";
@@ -60,26 +57,22 @@ app.post("/register", (req, res) => {
     ],
     (err, result) => {
       console.log(err);
-      console.log(result);
     }
   );
 });
 
-app.get("http://localhost:3300/:patient_id/perdet", (req, res) => {
+app.get("/:patientId/perdet", (req, res) => {
   db.query(
     "SELECT * FROM patient_details WHERE patient_id = ?;",
-    [patient_id],
+    [req.params.patientId],
     (err, result) => {
       res.send(result);
-      console.log(err);
-      console.log(result);
     }
   );
 });
 
 app.post("/api/exCredentials", (req, res) => {
   const username = req.body.username;
-  console.log(username);
   const sqlLoginQuery = "SELECT * FROM login_details WHERE username = ?;";
   db.query(sqlLoginQuery, [username], (err, result) => {
     res.send(result);

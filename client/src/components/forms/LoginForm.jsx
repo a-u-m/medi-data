@@ -18,7 +18,7 @@ const LoginForm = (props) => {
     if (!res.data.length) {
       console.log("Not Registered");
     } else {
-      props.pageDashHandler(res.data[0]);
+      props.loginDataHandler(res.data[0]);
     }
   };
   const usernameHandler = (e) => {
@@ -53,7 +53,7 @@ const LoginForm = (props) => {
       <ButtonA
         content="Register !"
         className="w-full mb-1 mt-2 hover:bg-[#545454e5] bg-[#545454]"
-        onClick={props.registerHandler}
+        onClick={props.registerDisplayHandler}
       />
     </ContainerB>
   );

@@ -8,14 +8,26 @@ const App = () => {
   const [dashDisplay, setDashDisplay] = useState(false);
   const [verifiedLoginDetails, setVerfiedLoginDetails] = useState({});
 
-  const pageDashHandler = async (loginDetails) => {
-    setDashDisplay(true);
+  useEffect(() => {
+    if (
+      Object.keys(verifiedLoginDetails).length === 0 &&
+      verifiedLoginDetails.constructor === Object
+    ) {
+      console.log("no data");
+      setDashDisplay(false);
+    } else {
+      console.log("data");
+      setDashDisplay(true);
+    }
+  }, [verifiedLoginDetails]);
+
+  const loginDataHandler = (loginDetails) => {
     setVerfiedLoginDetails(loginDetails);
   };
 
   return (
     <React.Fragment>
-      {!dashDisplay && <Login pageDashHandler={pageDashHandler} />}
+      {!dashDisplay && <Login loginDataHandler={loginDataHandler} />}
       {dashDisplay && <Dashboard basicDetails={verifiedLoginDetails} />}
       <div></div>
     </React.Fragment>

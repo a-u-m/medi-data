@@ -6,19 +6,16 @@ import axios from "axios";
 
 const Dashboard = (props) => {
   const [personalDetails, setPersonalDetails] = useState({});
-  console.log(props);
-  // useState(() => {
-  //   const fetchPd = async () => {
-  //     if (props) {
-  //       // const res = await axios.get(
-  //       //   `http://localhost:3300/${props.personalDetails.patient_id}/perdet`
-  //       // );
-  //       console.log(props);
-  //     }
-  //     console.log(props);
-  //   };
-  //   fetchPd();
-  // });
+  console.log(`http://localhost:3300/${props.basicDetails.patient_id}/perdet`);
+  useEffect(() => {
+    const fetchPd = async () => {
+      const res = await axios.get(
+        `http://localhost:3300/${props.basicDetails.patient_id}/perdet`
+      );
+      setPersonalDetails(res.data[0]);
+    };
+    fetchPd();
+  }, []);
   return (
     <ContainerA>
       <div>Welcome {props.basicDetails.username}</div>

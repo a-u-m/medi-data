@@ -4,26 +4,26 @@ import LoginForm from "../components/forms/LoginForm";
 import RegisterForm from "../components/forms/RegisterForm";
 
 const Login = (props) => {
-  const [loginState, setLoginState] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);
 
-  const registerHandler = () => {
-    setLoginState(false);
+  const registerDisplayHandler = () => {
+    setIsLogin(false);
   };
-  const loginHandler = () => {
-    setLoginState(true);
+  const loginDisplayHandler = () => {
+    setIsLogin(true);
   };
   return (
     <ContainerA>
-      {loginState && (
+      {isLogin && (
         <LoginForm
-          registerHandler={registerHandler}
-          pageDashHandler={props.pageDashHandler}
+          registerDisplayHandler={registerDisplayHandler}
+          loginDataHandler={props.loginDataHandler}
         />
       )}
-      {!loginState && (
+      {!isLogin && (
         <RegisterForm
-          loginHandler={loginHandler}
-          pageDashHandler={props.pageDashHandler}
+          loginDisplayHandler={loginDisplayHandler}
+          loginDataHandler={props.loginDataHandler}
         />
       )}
     </ContainerA>

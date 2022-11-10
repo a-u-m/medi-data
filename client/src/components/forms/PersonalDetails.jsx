@@ -150,7 +150,7 @@ const PersonalDetails = (props) => {
       <ButtonA
         content="Login !"
         className="w-full mb-1 mt-2 hover:bg-[#545454e5] bg-[#545454]"
-        onClick={props.loginHandler}
+        onClick={props.loginDisplayHandler}
       />
     </ContainerB>
   );
