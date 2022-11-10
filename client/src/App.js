@@ -8,7 +8,7 @@ const App = () => {
   const [dashDisplay, setDashDisplay] = useState(false);
   const [verifiedLoginDetails, setVerfiedLoginDetails] = useState({});
 
-  const pageDashHandler = (loginDetails) => {
+  const pageDashHandler = async (loginDetails) => {
     setDashDisplay(true);
     setVerfiedLoginDetails(loginDetails);
   };

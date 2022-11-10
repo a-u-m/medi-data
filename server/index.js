@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { application } = require("express");
 const app = express();
 dotenv.config();
 
@@ -26,25 +27,7 @@ app.post("/login", (req, res) => {
     "SELECT * FROM login_details WHERE username = ? AND password = ?;";
   db.query(sqlLoginQuery, [username, password], (err, result) => {
     console.log(result);
-    if (result.length) {
-      res.send(result);
-    } else {
-      res.send("unverified");
-    }
-  });
-});
-
-app.post("/api/exCredentials", (req, res) => {
-  const username = req.body.username;
-  console.log(username);
-  const sqlLoginQuery = "SELECT * FROM login_details WHERE username = ?;";
-  db.query(sqlLoginQuery, [username], (err, result) => {
-    console.log(result);
-    if (result.length) {
-      res.send("cUnavailable");
-    } else {
-      res.send("cAvailable");
-    }
+    res.send(result);
   });
 });
 
@@ -77,8 +60,30 @@ app.post("/register", (req, res) => {
     ],
     (err, result) => {
       console.log(err);
+      console.log(result);
     }
   );
+});
+
+app.get("http://localhost:3300/:patient_id/perdet", (req, res) => {
+  db.query(
+    "SELECT * FROM patient_details WHERE patient_id = ?;",
+    [patient_id],
+    (err, result) => {
+      res.send(result);
+      console.log(err);
+      console.log(result);
+    }
+  );
+});
+
+app.post("/api/exCredentials", (req, res) => {
+  const username = req.body.username;
+  console.log(username);
+  const sqlLoginQuery = "SELECT * FROM login_details WHERE username = ?;";
+  db.query(sqlLoginQuery, [username], (err, result) => {
+    res.send(result);
+  });
 });
 
 app.get("/", (req, res) => {

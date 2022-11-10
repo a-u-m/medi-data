@@ -15,7 +15,7 @@ const LoginForm = (props) => {
       username: loginUsername,
       password: loginPassword,
     });
-    if (res.data === "unverified") {
+    if (!res.data.length) {
       console.log("Not Registered");
     } else {
       props.pageDashHandler(res.data[0]);

@@ -24,7 +24,7 @@ const RegistrationDetails = (props) => {
     if (
       usernameDetails.isValid &&
       passwordDetails.isValid &&
-      res.data === "cAvailable"
+      !res.data.length
     ) {
       props.loginDataHandler({
         username: usernameDetails.value,
