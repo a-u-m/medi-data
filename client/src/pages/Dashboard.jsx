@@ -6,7 +6,6 @@ import axios from "axios";
 
 const Dashboard = (props) => {
   const [personalDetails, setPersonalDetails] = useState({});
-  console.log(`http://localhost:3300/${props.basicDetails.patient_id}/perdet`);
   useEffect(() => {
     const fetchPd = async () => {
       const res = await axios.get(

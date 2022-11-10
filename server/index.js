@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { application } = require("express");
+const { application, response } = require("express");
 const app = express();
 dotenv.config();
 
@@ -21,8 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(username);
-  console.log(password);
   const sqlLoginQuery =
     "SELECT * FROM login_details WHERE username = ? AND password = ?;";
   db.query(sqlLoginQuery, [username, password], (err, result) => {
@@ -31,9 +29,9 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  const errors = { err1: false, err2: false };
   const login = req.body.loginDetails;
   const personal = req.body.personalDetails;
-  res.send("Successful");
   const loginRegisterQuery =
     "INSERT INTO login_details VALUES( ? , ? , ? , ? );";
   const personalRegisterQuery =
@@ -42,7 +40,7 @@ app.post("/register", (req, res) => {
     loginRegisterQuery,
     [login.patient_id, login.username, login.password, login.registrationDate],
     (err, result) => {
-      console.log(err);
+      err ? res.send(err) : console.log("s1");
     }
   );
   db.query(
@@ -56,7 +54,7 @@ app.post("/register", (req, res) => {
       personal.email,
     ],
     (err, result) => {
-      console.log(err);
+      err ? console.log(err) : res.send("Successful");
     }
   );
 });

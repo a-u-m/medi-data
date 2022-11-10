@@ -6,28 +6,58 @@ import ButtonA from "../UI/ButtonA";
 import PersonalDetails from "./PersonalDetails";
 import RegistrationDetails from "./RegistrationDetails";
 import axios from "axios";
+import ErrorModal from "../UI/ErrorModal";
 
 const RegisterForm = (props) => {
   const [detailsValid, setDetailsValid] = useState(false);
   const [personalData, setPersonalData] = useState({});
   const [loginData, setLoginData] = useState({});
+  const [modalDetails, setModalDetails] = useState({
+    isVisible: false,
+    title: "",
+    type: "",
+  });
+  const closeModal = () => {
+    setModalDetails({ isVisible: false, title: "", type: "" });
+  };
   const personalDataHandler = (res) => {
     setDetailsValid(true);
     setPersonalData(res);
   };
   const loginDataHandler = async (res) => {
     setLoginData(res);
-    const regRes = await axios.post("http://localhost:3300/register", {
-      loginDetails: res,
-      personalDetails: personalData,
-    });
-    props.loginDataHandler(res);
+    try {
+      const regRes = await axios.post("http://localhost:3300/register", {
+        loginDetails: res,
+        personalDetails: personalData,
+      });
+      if (regRes.data === "Successful") {
+        props.loginDataHandler(res);
+      } else {
+        console.log("Server Down");
+        setModalDetails({
+          isVisible: true,
+          title: "Server Down! Please try again later",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      console.log("Server Error");
+      setModalDetails({
+        isVisible: true,
+        title: "Server Down! Please try again later",
+        type: "error",
+      });
+    }
   };
   const backHandler = () => {
     setDetailsValid(false);
   };
   return (
     <React.Fragment>
+      {modalDetails.isVisible && modalDetails.type === "error" && (
+        <ErrorModal title={modalDetails.title} closeModal={closeModal} />
+      )}
       {!detailsValid && (
         <PersonalDetails
           loginDisplayHandler={props.loginDisplayHandler}

@@ -4,6 +4,7 @@ import ContainerB from "../UI/ContainerB";
 import HeadingA from "../UI/HeadingA";
 import ButtonA from "../UI/ButtonA";
 import validator from "validator";
+import InvalidModal from "../UI/InvalidModal";
 
 const PersonalDetails = (props) => {
   const [emailIsValid, setEmailIsValid] = useState("");
@@ -11,6 +12,14 @@ const PersonalDetails = (props) => {
   const [contactIsValid, setContactIsValid] = useState("");
   const [firtnameIsValid, setFirstnameIsValid] = useState("");
   const [lastnameIsValid, setLastnameIsValid] = useState("");
+  const [modalDetails, setModalDetails] = useState({
+    isVisible: false,
+    title: "",
+    type: "",
+  });
+  const closeModal = () => {
+    setModalDetails({ isVisible: false, title: "", type: "" });
+  };
   // const [formIsValid, setFormIsValid] = useState(true);
   const [data, setData] = useState({
     firstName: "",
@@ -31,6 +40,11 @@ const PersonalDetails = (props) => {
       props.personalDataHandler(data);
     } else {
       console.log("Inputs are not as per our standards");
+      setModalDetails({
+        isVisible: true,
+        title: "Invalid Inputs! Please enter valid details",
+        type: "invalid",
+      });
     }
   };
   const ageHandler = (e) => {
@@ -99,6 +113,9 @@ const PersonalDetails = (props) => {
   };
   return (
     <ContainerB className="w-[23rem] h-fit p-2">
+      {modalDetails.isVisible && modalDetails.type === "invalid" && (
+        <InvalidModal title={modalDetails.title} closeModal={closeModal} />
+      )}
       <HeadingA>Fill In The Details To Create A New Account !</HeadingA>
       <div className="flex w-full">
         <InputA
