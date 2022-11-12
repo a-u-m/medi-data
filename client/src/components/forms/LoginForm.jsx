@@ -1,4 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate, redirect } from "react-router-dom";
+import LoginContext from "../contexts/LoginContext";
 import InputA from "../UI/InputA";
 import ButtonA from "../UI/ButtonA";
 import ContainerB from "../UI/ContainerB";
@@ -6,8 +8,11 @@ import HeadingA from "../UI/HeadingA";
 import axios from "axios";
 import ErrorModal from "../UI/ErrorModal";
 import InvalidModal from "../UI/InvalidModal";
+import Login from "../../pages/Login";
 
 const LoginForm = (props) => {
+  const ctx = useContext(LoginContext);
+  const navigate = useNavigate();
   const [loginUsername, setLoginUsername] = useState();
   const [loginPassword, setLoginPassword] = useState();
   const [modalDetails, setModalDetails] = useState({
@@ -32,7 +37,16 @@ const LoginForm = (props) => {
           type: "invalid",
         });
       } else {
-        props.loginDataHandler(res.data[0]);
+        // props.loginDataHandler(res.data[0]);
+        ctx.setLoginDetails((preState) => {
+          return {
+            ...preState,
+            username: res.data[0].username,
+            id: res.data[0].patient_id,
+            isAuthenticated: true,
+          };
+        });
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log("Server Error");

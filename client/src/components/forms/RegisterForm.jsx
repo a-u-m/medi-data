@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import LoginContext from "../contexts/LoginContext";
+import { useNavigate } from "react-router-dom";
 import InputA from "../UI/InputA";
 import ContainerB from "../UI/ContainerB";
 import HeadingA from "../UI/HeadingA";
@@ -9,9 +11,10 @@ import axios from "axios";
 import ErrorModal from "../UI/ErrorModal";
 
 const RegisterForm = (props) => {
+  const ctx = useContext(LoginContext);
+  const navigate = useNavigate();
   const [detailsValid, setDetailsValid] = useState(false);
   const [personalData, setPersonalData] = useState({});
-  const [loginData, setLoginData] = useState({});
   const [modalDetails, setModalDetails] = useState({
     isVisible: false,
     title: "",
@@ -25,14 +28,21 @@ const RegisterForm = (props) => {
     setPersonalData(res);
   };
   const loginDataHandler = async (res) => {
-    setLoginData(res);
     try {
       const regRes = await axios.post("http://localhost:3300/register", {
         loginDetails: res,
         personalDetails: personalData,
       });
-      if (regRes.data === "Successful") {
-        props.loginDataHandler(res);
+      if (regRes.data.affectedRows) {
+        ctx.setLoginDetails((preState) => {
+          return {
+            ...preState,
+            username: res.username,
+            id: res.patient_id,
+            isAuthenticated: true,
+          };
+        });
+        navigate("/dashboard");
       } else {
         console.log("Server Down");
         setModalDetails({

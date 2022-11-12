@@ -1,36 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, redirect, Navigate } from "react-router-dom";
+import { useContext } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import "./index.css";
+import { LoginProvider } from "./components/contexts/LoginContext";
+import LoginContext from "./components/contexts/LoginContext";
 
 const App = () => {
-  const [dashDisplay, setDashDisplay] = useState(false);
-  const [verifiedLoginDetails, setVerfiedLoginDetails] = useState({});
-
-  useEffect(() => {
-    if (
-      Object.keys(verifiedLoginDetails).length === 0 &&
-      verifiedLoginDetails.constructor === Object
-    ) {
-      console.log("no data");
-      setDashDisplay(false);
-    } else {
-      console.log("data");
-      setDashDisplay(true);
-    }
-  }, [verifiedLoginDetails]);
-
-  const loginDataHandler = (loginDetails) => {
-    setVerfiedLoginDetails(loginDetails);
-  };
+  const ctx = useContext(LoginContext);
 
   return (
-    <React.Fragment>
-      {!dashDisplay && <Login loginDataHandler={loginDataHandler} />}
+    <LoginProvider>
+      {/* {!dashDisplay && <Login loginDataHandler={loginDataHandler} />}
       {dashDisplay && <Dashboard basicDetails={verifiedLoginDetails} />}
-      <div></div>
-    </React.Fragment>
+      <div></div> */}
+      <Routes>
+        <Route path="/" exact element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </LoginProvider>
   );
 };
 

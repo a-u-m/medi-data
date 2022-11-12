@@ -40,7 +40,7 @@ app.post("/register", (req, res) => {
     loginRegisterQuery,
     [login.patient_id, login.username, login.password, login.registrationDate],
     (err, result) => {
-      err ? res.send(err) : console.log("s1");
+      err ? res.send(err) : null;
     }
   );
   db.query(
@@ -54,7 +54,8 @@ app.post("/register", (req, res) => {
       personal.email,
     ],
     (err, result) => {
-      err ? console.log(err) : res.send("Successful");
+      err ? console.log(err) : res.send(result);
+      console.log(result);
     }
   );
 });

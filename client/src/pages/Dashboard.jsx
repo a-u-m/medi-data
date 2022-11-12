@@ -1,24 +1,70 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import LoginContext from "../components/contexts/LoginContext";
 import ContainerA from "../components/UI/ContainerA";
-import LoginForm from "../components/forms/LoginForm";
-import RegisterForm from "../components/forms/RegisterForm";
+import LoadingAnimation from "../components/UI/LoadingAnimation";
 import axios from "axios";
 
-const Dashboard = (props) => {
-  const [personalDetails, setPersonalDetails] = useState({});
+const Dashboard = () => {
+  const ctx = useContext(LoginContext);
+  const [personalDetails, setPersonalDetails] = useState({
+    isFetched: false,
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  useEffect(() => {
+    if (!ctx.loginDetails.isAuthenticated) return;
+    localStorage.setItem("loginState", JSON.stringify(ctx.loginDetails));
+  }, [ctx.loginDetails]);
+
+  useEffect(() => {
+    const ld = localStorage.getItem("loginState");
+    if (ld === null) {
+      setIsAuthenticated(false);
+    } else {
+      ctx.setLoginDetails(JSON.parse(ld));
+      setIsAuthenticated(JSON.parse(ld).isAuthenticated);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchPd = async () => {
-      const res = await axios.get(
-        `http://localhost:3300/${props.basicDetails.patient_id}/perdet`
-      );
-      setPersonalDetails(res.data[0]);
+      if (!ctx.loginDetails.isAuthenticated) return;
+      try {
+        const res = await axios.get(
+          `http://localhost:3300/${ctx.loginDetails.id}/perdet`
+        );
+        setPersonalDetails((prevState) => {
+          return { ...prevState, ...res.data[0], isFetched: true };
+        });
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchPd();
-  }, []);
+  }, [ctx.loginDetails]);
+
   return (
-    <ContainerA>
-      <div>Welcome {props.basicDetails.username}</div>
-    </ContainerA>
+    <React.Fragment>
+      {isAuthenticated === false ? (
+        <Navigate replace to="/login" />
+      ) : (
+        <>
+          {personalDetails.isFetched ? (
+            <ContainerA>
+              <div className="flex flex-col">
+                <div>
+                  Welcome {personalDetails.firstname} {personalDetails.lastname}
+                </div>
+              </div>
+            </ContainerA>
+          ) : (
+            <LoadingAnimation />
+          )}
+        </>
+      )}
+    </React.Fragment>
   );
 };
 
