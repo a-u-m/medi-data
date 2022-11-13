@@ -5,10 +5,10 @@ import LoginForm from "../components/forms/LoginForm";
 import RegisterForm from "../components/forms/RegisterForm";
 
 const Login = (props) => {
-  const ctx = useContext(LoginContext);
-  useEffect(() => {
-    localStorage.setItem("loginState", JSON.stringify(ctx.loginDetails));
-  });
+  // const ctx = useContext(LoginContext);
+  // useEffect(() => {
+  //   localStorage.setItem("loginState", JSON.stringify(ctx.loginDetails));
+  // });
 
   const [isLogin, setIsLogin] = useState(true);
 
