@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import LoginContext from "../components/contexts/LoginContext";
-import ContainerA from "../components/UI/ContainerA";
 import LoadingAnimation from "../components/UI/LoadingAnimation";
+import CardA from "../components/UI/CardA";
+import Navbar from "../components/Navbar";
+import MyProfile from "../components/MyProfile";
 import axios from "axios";
+import DashAppointment from "../components/DashAppointment";
+import DashCards from "../components/DashCards";
 
 const Dashboard = () => {
   const ctx = useContext(LoginContext);
@@ -52,13 +56,21 @@ const Dashboard = () => {
       ) : (
         <>
           {personalDetails.isFetched ? (
-            <ContainerA>
-              <div className="flex flex-col">
-                <div>
-                  Welcome {personalDetails.firstname} {personalDetails.lastname}
+            <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
+              <Navbar />
+              <div className="flex-1 flex flex-col-reverse md:flex-row">
+                <div className="basis-2/3 grid grid-cols-2  lg:grid-cols-3  m-2 mr-0">
+                  <DashCards />
+                </div>
+                <div className="basis-1/3 flex flex-col m-2 ml-0">
+                  <MyProfile
+                    personalDetails={personalDetails}
+                    loginDetails={ctx.loginDetails}
+                  />
+                  <DashAppointment />
                 </div>
               </div>
-            </ContainerA>
+            </div>
           ) : (
             <LoadingAnimation />
           )}

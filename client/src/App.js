@@ -4,6 +4,9 @@ import { useContext } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Vaccination from "./pages/Vaccination";
+import Appointment from "./pages/Appointment";
+import Navbar from "./components/Navbar";
 import "./index.css";
 import { LoginProvider } from "./components/contexts/LoginContext";
 import LoginContext from "./components/contexts/LoginContext";
@@ -20,6 +23,8 @@ const App = () => {
         <Route path="/" exact element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/vaccination" element={<Vaccination />} />
+        <Route path="/appointment" element={<Appointment />} />
       </Routes>
     </LoginProvider>
   );

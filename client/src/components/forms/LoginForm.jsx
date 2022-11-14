@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, redirect } from "react-router-dom";
 import LoginContext from "../contexts/LoginContext";
 import InputA from "../UI/InputA";
@@ -20,6 +20,20 @@ const LoginForm = (props) => {
     title: "",
     type: "",
   });
+  useEffect(() => {
+    const ld = localStorage.getItem("loginState");
+    if (ld === null) {
+      console.log("not signed in");
+    } else {
+      if (JSON.parse(ld).isAuthenticated) {
+        ctx.setLoginDetails(JSON.parse(ld));
+        navigate("/dashboard", { replace: true });
+      } else {
+        console.log("not signed in");
+      }
+    }
+  }, []);
+
   const closeModal = () => {
     setModalDetails({ isVisible: false, title: "", type: "" });
   };
@@ -30,7 +44,7 @@ const LoginForm = (props) => {
         password: loginPassword,
       });
       if (!res.data.length) {
-        console.log("Not Registered");
+        console.log("--");
         setModalDetails({
           isVisible: true,
           title: "Invalid Inputs! Please enter correct details",
@@ -46,7 +60,7 @@ const LoginForm = (props) => {
             isAuthenticated: true,
           };
         });
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
       }
     } catch (error) {
       console.log("Server Error");

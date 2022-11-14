@@ -24,7 +24,8 @@ app.post("/login", (req, res) => {
   const sqlLoginQuery =
     "SELECT * FROM login_details WHERE username = ? AND password = ?;";
   db.query(sqlLoginQuery, [username, password], (err, result) => {
-    res.send(result);
+    if (err) res.status(400).send({ message: "err" });
+    else res.send(result);
   });
 });
 
@@ -65,7 +66,8 @@ app.get("/:patientId/perdet", (req, res) => {
     "SELECT * FROM patient_details WHERE patient_id = ?;",
     [req.params.patientId],
     (err, result) => {
-      res.send(result);
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
     }
   );
 });
