@@ -13,7 +13,9 @@ const DashCards = () => {
   const navigate = useNavigate();
   return (
     <>
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer">
+      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer" onClick={() => {
+        navigate("/prescription");
+      }}>
         <div className=" flex flex-row items-center">
           <img src={prescriptionIcon} width="28px" />
           <div className="ml-2">Prescriptions</div>

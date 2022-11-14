@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Vaccination from "./pages/Vaccination";
 import Appointment from "./pages/Appointment";
+import Prescription from "./pages/Prescription";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { LoginProvider } from "./components/contexts/LoginContext";
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/vaccination" element={<Vaccination />} />
         <Route path="/appointment" element={<Appointment />} />
+        <Route path="/prescription" element={<Prescription/>} />
       </Routes>
     </LoginProvider>
   );

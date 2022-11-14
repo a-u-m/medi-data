@@ -83,6 +83,32 @@ app.post("/api/exCredentials", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Base");
 });
+//Prescription API
+app.get("/prescription/:id",(req,res)=>{
+  const id=req.params.id;
+  const preQuery="select * from drugs_prescription where patient_id=?;"
+  db.query(preQuery,[id],(err,result)=>{
+    if(result.length==0){
+      res.send([0])
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+app.post("/prescription/add/:id",(req,res)=>{
+  const addQuery="insert into drugs_prescription values(?,?,?,?,?,?,?);";
+  db.query(addQuery,[req.body.prescription_id,req.body.course_title,req.body.medication,req.body.course_duration,req.body.intervals,req.body.comment,req.params.id],(err,result)=>{
+    if(err){
+      console.log(err);
+      res.send(false);
+    }
+    else{
+      console.log("success");
+      res.send(true);
+    }
+  });
+})
 
 app.listen(3300, () => {
   console.log("Express Server 3300");
