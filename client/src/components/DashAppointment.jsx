@@ -4,7 +4,7 @@ import medicalIcon from "../assets/medical-appointment2.png";
 
 const DashAppointment = (props) => {
   return (
-    <CardA style="basis-1/3 flex flex-col p-3">
+    <CardA style="basis-1/4 flex flex-col p-3">
       <div className="basis-1/12 flex items-center">
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -9,13 +9,20 @@ import MyProfile from "../components/MyProfile";
 import axios from "axios";
 import DashAppointment from "../components/DashAppointment";
 import DashCards from "../components/DashCards";
+import UpdateProfile from "../components/UpdateProfile";
 
 const Dashboard = () => {
   const ctx = useContext(LoginContext);
-  const [personalDetails, setPersonalDetails] = useState({
+  const [profileView, setProfileView] = useState({
     isFetched: false,
   });
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [profileEdit, setProfileEdit] = useState(false);
+  const profileUpdateHandler = () => {
+    setProfileEdit((prevState) => {
+      return !prevState;
+    });
+  };
 
   useEffect(() => {
     if (!ctx.loginDetails.isAuthenticated) return;
@@ -37,9 +44,9 @@ const Dashboard = () => {
       if (!ctx.loginDetails.isAuthenticated) return;
       try {
         const res = await axios.get(
-          `http://localhost:3300/${ctx.loginDetails.id}/perdet`
+          `http://localhost:3300/${ctx.loginDetails.id}/myprofile`
         );
-        setPersonalDetails((prevState) => {
+        setProfileView((prevState) => {
           return { ...prevState, ...res.data[0], isFetched: true };
         });
       } catch (error) {
@@ -55,7 +62,7 @@ const Dashboard = () => {
         <Navigate replace to="/login" />
       ) : (
         <>
-          {personalDetails.isFetched ? (
+          {profileView.isFetched ? (
             <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
               <Navbar />
               <div className="flex-1 flex flex-col-reverse md:flex-row">
@@ -63,10 +70,19 @@ const Dashboard = () => {
                   <DashCards />
                 </div>
                 <div className="basis-1/3 flex flex-col m-2 ml-0">
-                  <MyProfile
-                    personalDetails={personalDetails}
-                    loginDetails={ctx.loginDetails}
-                  />
+                  {profileEdit ? (
+                    <UpdateProfile
+                      profileView={profileView}
+                      loginDetails={ctx.loginDetails}
+                      profileUpdateHandler={profileUpdateHandler}
+                    />
+                  ) : (
+                    <MyProfile
+                      profileView={profileView}
+                      loginDetails={ctx.loginDetails}
+                      profileUpdateHandler={profileUpdateHandler}
+                    />
+                  )}
                   <DashAppointment />
                 </div>
               </div>

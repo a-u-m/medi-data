@@ -19,6 +19,7 @@ const Vaccination = () => {
       ) : (
         <>
           <Navbar />
+          
         </>
       )}
     </>
