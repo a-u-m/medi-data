@@ -97,6 +97,17 @@ app.get("/:patientId/myprofile", (req, res) => {
   );
 });
 
+app.get("/:patientId/appointmentDetails", (req, res) => {
+  db.query(
+    "SELECT * FROM doctor_appointment WHERE patient_id = ?;",
+    [req.params.patientId],
+    (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
 app.post("/api/exCredentials", (req, res) => {
   const username = req.body.username;
   const sqlLoginQuery = "SELECT * FROM login_details WHERE username = ?;";
