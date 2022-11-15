@@ -15,6 +15,7 @@ import {
     HStack
 } from "@chakra-ui/react";
 import axios from 'axios';
+import CardA from '../UI/CardA';
 const PreAdd = (prop) => {
     const [newPre, setnewPre] = useState({ prescription_id: "", course_title: "", medication: "", course_duration: "", intervals: "", comment: "" });
     const localData = JSON.parse(window.localStorage.getItem("loginState"));
@@ -41,14 +42,14 @@ const PreAdd = (prop) => {
         <>
             <Container centerContent>
 
+                <CardA style="flex flex-col p-7 justify-between ">
 
-                <Stack bg='teal.300' p='2rem' borderRadius="10px" display='flex' justifyContent='center' >
                     <Heading size='md' mb='2rem'>Please enter all the details</Heading>
-                    <Input placeholder='Course Title' size='lg' bg='white' name='course_title' onChange={preHandler} />
-                    <Input placeholder='Medication' size='lg' bg='white' name='medication' onChange={preHandler} />
-                    <Input placeholder='Course Duration' size='lg' bg='white' name='course_duration' onChange={preHandler} type='number' />
-                    <Input placeholder='Intervals' size='lg' bg='white' name='intervals' onChange={preHandler} />
-                    <Textarea placeholder='Comment' size='lg' bg='white' name='comment' onChange={preHandler} />
+                    <Input placeholder='Course Title' size='lg' bg='white' name='course_title' onChange={preHandler} m='5px' />
+                    <Input placeholder='Medication' size='lg' bg='white' name='medication' onChange={preHandler} m='5px' />
+                    <Input placeholder='Course Duration' size='lg' bg='white' name='course_duration' onChange={preHandler} type='number' m='5px' />
+                    <Input placeholder='Intervals' size='lg' bg='white' name='intervals' onChange={preHandler} m='5px' />
+                    <Textarea placeholder='Comment' size='lg' bg='white' name='comment' onChange={preHandler} m='5px' />
                     <HStack display='flex' justifyContent='center'>
                         <Button bgColor='blue.400' color='white' onClick={submitHandler}>Submit</Button>
                         <Button bgColor='blue.400' color='white' onClick={cancelHandler}>Cancel</Button>
@@ -56,8 +57,7 @@ const PreAdd = (prop) => {
 
                     </HStack>
 
-                </Stack>
-
+                </CardA>
             </Container>
 
 

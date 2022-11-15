@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import axios from "axios";
+import { AiFillDelete } from 'react-icons/ai';
 import {
     Box,
     Button,
@@ -30,7 +31,19 @@ const Data = (prop) => {
         try {
             const tempPre = await axios.get(`http://localhost:3300/prescription/${localData.id}`);
             setpreData(tempPre.data);
+            console.log(preData);
 
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const preDelHandler = async (prescription_id) => {
+        console.log(prescription_id);
+
+        try {
+            const deldata = await axios.post("http://localhost:3300/prescription/delete", { pre_id: prescription_id });
+            console.log(deldata.data);
+            window.location.reload();
         } catch (err) {
             console.log(err);
         }
@@ -38,9 +51,20 @@ const Data = (prop) => {
     useEffect(() => {
         fetchPre(localData);
     }, [prop.preState])
+
     if (preData.length == 0) {
         return (<>
-            <Heading>Loading</Heading>
+            <Box display='flex' justifyContent='center'>
+                <Box display='flex' flexDirection='row' justifyContent='center' mt='25vh'>
+                    <svg
+                        className="animate-spin h-5 w-5 mr-3 rounded-full border-[2px] border-black border-b-0 bg-[#ffffff]"
+                        viewBox="0 0 24 24"
+                    ></svg>
+                    loading
+                </Box>
+            </Box>
+
+
         </>)
     }
     else {
@@ -48,7 +72,7 @@ const Data = (prop) => {
             <>
                 {preData[0] == 0 ? <Heading>No data</Heading> :
                     <Box className='border-[3px] border-black rounded-lg' >
-                        <Table variant='striped' colorScheme='gray' size='lg'>
+                        <Table variant='striped' colorScheme='teal' size='lg'>
                             <TableCaption>Prescription Record</TableCaption>
                             <Thead>
                                 <Tr>
@@ -61,7 +85,7 @@ const Data = (prop) => {
                             </Thead>
                             <Tbody>
                                 {preData.map((x) => {
-                                    const { patient_id, course_title, medication, course_duration, intervals, comment } = x;
+                                    const { prescription_id, patient_id, course_title, medication, course_duration, intervals, comment } = x;
                                     return (
                                         <Tr key={patient_id}>
                                             <Td>{course_title}</Td>
@@ -69,6 +93,8 @@ const Data = (prop) => {
                                             <Td>{course_duration}</Td>
                                             <Td>{intervals}</Td>
                                             <Td>{comment}</Td>
+                                            <Td >{<AiFillDelete size='20px' onClick={() => { preDelHandler(prescription_id) }} />}
+                                            </Td>
                                         </Tr>
                                     );
                                 })}

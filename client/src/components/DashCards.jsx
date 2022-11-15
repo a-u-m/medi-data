@@ -13,7 +13,7 @@ const DashCards = () => {
   const navigate = useNavigate();
   return (
     <>
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer" onClick={() => {
+      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer p-3" onClick={() => {
         navigate("/prescription");
       }}>
         <div className=" flex flex-row items-center">
