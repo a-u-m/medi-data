@@ -155,6 +155,18 @@ app.post("/prescription/add/:id", (req, res) => {
     }
   );
 });
+app.post("/prescription/delete",(req,res)=>{
+  const delquery="delete from drugs_prescription where prescription_id=?;";
+  db.query(delquery,[req.body.pre_id],(err,result)=>{
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("success server");
+      res.send("nice");
+    }
+  });
+});
 
 app.listen(3300, () => {
   console.log("Express Server 3300");

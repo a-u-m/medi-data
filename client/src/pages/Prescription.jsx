@@ -11,7 +11,7 @@ const Prescription = () => {
             return (<PreAdd setpreState={setpreState} />);
         }
         if (preState == 1) {
-            return (<Data preState={preState} />);
+            return (<Data preState={preState} setpreState={setpreState} />);
         }
     }
     const addHandler = () => {
@@ -20,11 +20,13 @@ const Prescription = () => {
     return (
         <>
             <Navbar />
-            <Container centerContent>
-                <Heading m='3rem'>Drugs Prescription</Heading>
-                {preDisplay(preState)}
-                <Image src='add.png' position='absolute' right='5rem' top='39rem' boxSize='70px' onClick={addHandler} ></Image>
-            </Container>
+            <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
+                <Container centerContent  >
+                    <Heading m='3rem'>Drugs Prescription</Heading>
+                    {preDisplay(preState)}
+                    <Image src='add.png' position='fixed' right='4vw' top='83vh' boxSize='70px' onClick={addHandler} ></Image>
+                </Container>
+            </div>
         </>
     )
 }
