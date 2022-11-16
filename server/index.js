@@ -61,13 +61,44 @@ app.post("/register", (req, res) => {
   );
 });
 
+app.delete("/appointment/:appointmentId", (req, res) => {
+  const sqlQuery = "DELETE FROM doctor_appointment WHERE appointment_id=?;";
+  db.query(sqlQuery, [req.params.appointmentId], (err, result) => {
+    if (err) res.status(400).send({ message: "error" });
+    else res.send(result);
+  });
+});
+
+app.post(`/addAppointment`, (req, res) => {
+  const data = req.body;
+  const sqlQuery = "INSERT INTO doctor_appointment VALUES(?,?,?,?,?,?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      data.appointment_id,
+      data.patient_id,
+      data.type,
+      data.status,
+      data.doctor,
+      data.note,
+      parseInt(data.cost),
+      data.regDate,
+      data.schedule,
+    ],
+    (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
 app.post("/profileupdate", (req, res) => {
   const data = req.body;
   console.log(req.body);
-  const personalRegisterQuery =
+  const sqlQuery =
     "UPDATE patient_details SET firstname=?,lastname=?,age=?,contact_no=?,email=?,blood_grp=?,gender=?,disablity=? WHERE patient_id=?";
   db.query(
-    personalRegisterQuery,
+    sqlQuery,
     [
       data.firstname,
       data.lastname,
@@ -110,8 +141,8 @@ app.get("/:patientId/appointmentDetails", (req, res) => {
 
 app.post("/api/exCredentials", (req, res) => {
   const username = req.body.username;
-  const sqlLoginQuery = "SELECT * FROM login_details WHERE username = ?;";
-  db.query(sqlLoginQuery, [username], (err, result) => {
+  const sqlQuery = "SELECT * FROM login_details WHERE username = ?;";
+  db.query(sqlQuery, [username], (err, result) => {
     res.send(result);
   });
 });
@@ -155,13 +186,12 @@ app.post("/prescription/add/:id", (req, res) => {
     }
   );
 });
-app.post("/prescription/delete",(req,res)=>{
-  const delquery="delete from drugs_prescription where prescription_id=?;";
-  db.query(delquery,[req.body.pre_id],(err,result)=>{
-    if(err){
+app.post("/prescription/delete", (req, res) => {
+  const delquery = "delete from drugs_prescription where prescription_id=?;";
+  db.query(delquery, [req.body.pre_id], (err, result) => {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("success server");
       res.send("nice");
     }

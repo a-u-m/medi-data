@@ -53,7 +53,6 @@ const UpdateProfile = (props) => {
         );
         if (res.data.affectedRows) {
           props.profileUpdateHandler();
-          window.location.reload(false);
         } else {
           setModalDetails({
             isVisible: true,

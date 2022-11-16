@@ -54,7 +54,7 @@ const Dashboard = () => {
       }
     };
     fetchPd();
-  }, [ctx.loginDetails]);
+  }, [ctx.loginDetails, profileEdit]);
 
   return (
     <React.Fragment>
