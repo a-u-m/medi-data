@@ -91,8 +91,8 @@ const AppointmentView = (props) => {
             {appointmentData.data.length ? (
               <div className="flex-auto flex flex-col">
                 <dir className=" mt-1 mb-1 text-[2rem]">Appointments</dir>
-                <div className="flex-1 flex flex-row justify-center m-2 ml-[2%] mr-[2%]">
-                  <div className="flex-auto w-[30%] h-fit flex flex-col">
+                <div className="flex-1 flex flex-row justify-center  ml-[2%] mr-[2%]">
+                  <div className="flex-auto w-[25%] h-fit flex flex-col">
                     <div className="flex-auto m-1 rounded bg-white shdaow">
                       <div className="flex flex-row  p-2">
                         <img src={overviewIcon} width="24px" className="mr-1" />
@@ -111,7 +111,7 @@ const AppointmentView = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex-auto w-[70%]">
+                  <div className="flex-auto w-[75%]">
                     <div className=" h-fit flex flex-row bg-[white] shadow rounded font-[600] m-1">
                       <div className=" flex-auto  rounded m-1 w-[20%] flex justify-center items-center">
                         DOCTOR
