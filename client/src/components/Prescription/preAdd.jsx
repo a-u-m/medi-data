@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import addIcon from "../../assets/add.png";
 import {
     Box,
     Button,
@@ -44,15 +45,15 @@ const PreAdd = (prop) => {
 
                 <CardA style="flex flex-col p-7 justify-between ">
 
-                    <Heading size='md' mb='2rem'>Please enter all the details</Heading>
-                    <Input placeholder='Course Title' size='lg' bg='white' name='course_title' onChange={preHandler} m='5px' />
-                    <Input placeholder='Medication' size='lg' bg='white' name='medication' onChange={preHandler} m='5px' />
-                    <Input placeholder='Course Duration' size='lg' bg='white' name='course_duration' onChange={preHandler} type='number' m='5px' />
-                    <Input placeholder='Intervals' size='lg' bg='white' name='intervals' onChange={preHandler} m='5px' />
-                    <Textarea placeholder='Comment' size='lg' bg='white' name='comment' onChange={preHandler} m='5px' />
+                    <Heading size='md' mb='2rem' fontWeight='normal' color='black'> Add Prescription Details</Heading>
+                    <Input placeholder='Course Title' size='lg' bg='white' name='course_title' onChange={preHandler} m='5px' border='1px' borderColor='black' />
+                    <Input placeholder='Medication' size='lg' bg='white' name='medication' onChange={preHandler} m='5px' border='1px' borderColor='black' />
+                    <Input placeholder='Course Duration' size='lg' bg='white' name='course_duration' onChange={preHandler} type='number' m='5px' border='1px' borderColor='black' />
+                    <Input placeholder='Intervals' size='lg' bg='white' name='intervals' onChange={preHandler} m='5px' border='1px' borderColor='black' />
+                    <Textarea placeholder='Comment' size='lg' bg='white' name='comment' onChange={preHandler} m='5px' border='1px' borderColor='black' />
                     <HStack display='flex' justifyContent='center'>
-                        <Button bgColor='blue.400' color='white' onClick={submitHandler}>Submit</Button>
-                        <Button bgColor='blue.400' color='white' onClick={cancelHandler}>Cancel</Button>
+                        <Button bgColor='black' color='white' onClick={submitHandler}>Submit</Button>
+                        <Button bgColor='black' color='white' onClick={cancelHandler}>Cancel</Button>
 
 
                     </HStack>

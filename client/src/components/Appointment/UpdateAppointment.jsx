@@ -40,7 +40,7 @@ const UpdateAppointment = (props) => {
     ) {
       try {
         const res = await axios.post(
-          `http://localhost:3300/addAppointment`,
+          `http://localhost:3300/appointment/addAppointment`,
           updateData
         );
         console.log(res);

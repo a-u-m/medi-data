@@ -80,7 +80,7 @@ const Data = (prop) => {
     return (
       <>
         {preData[0] == 0 ? (
-          <Heading>No data</Heading>
+          <Heading fontWeight='normal' mt='11rem' fontSize='lg'>No Prescription Details</Heading>
         ) : (
           <Box className="border-[3px] border-black rounded-lg">
             <Table variant="striped" colorScheme="teal" size="lg">

@@ -39,7 +39,7 @@ const LoginForm = (props) => {
   };
   const submitHandler = async () => {
     try {
-      const res = await axios.post("http://localhost:3300/login", {
+      const res = await axios.post("http://localhost:3300/auth/login", {
         username: loginUsername,
         password: loginPassword,
       });

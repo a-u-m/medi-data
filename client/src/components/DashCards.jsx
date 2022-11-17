@@ -87,7 +87,7 @@ const DashCards = () => {
         </div>
       </CardA>
 
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer">
+      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer" onClick={() => { navigate("/test"); }}>
         <div className=" flex flex-row items-center">
           <img src={testIcon} width="28px" />
           <div className="ml-2">Medical Tests</div>

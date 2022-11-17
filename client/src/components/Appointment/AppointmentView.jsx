@@ -57,7 +57,7 @@ const AppointmentView = (props) => {
       try {
         if (!Object.keys(loginDetails).length) return;
         const res = await axios.get(
-          `http://localhost:3300/${loginDetails.id}/appointmentDetails`
+          `http://localhost:3300/appointment/${loginDetails.id}/appointmentDetails`
         );
         console.log(res.data);
         setAppointmnetData({ data: res.data, isFetched: true });

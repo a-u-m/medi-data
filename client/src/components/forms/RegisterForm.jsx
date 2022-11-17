@@ -29,7 +29,7 @@ const RegisterForm = (props) => {
   };
   const loginDataHandler = async (res) => {
     try {
-      const regRes = await axios.post("http://localhost:3300/register", {
+      const regRes = await axios.post("http://localhost:3300/auth/register", {
         loginDetails: res,
         personalDetails: personalData,
       });

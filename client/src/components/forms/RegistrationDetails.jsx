@@ -28,7 +28,7 @@ const RegistrationDetails = (props) => {
   };
   const registerHandler = async () => {
     try {
-      const res = await axios.post("http://localhost:3300/api/exCredentials", {
+      const res = await axios.post("http://localhost:3300/auth/api/exCredentials", {
         username: usernameDetails.value,
       });
       console.log(res.data);

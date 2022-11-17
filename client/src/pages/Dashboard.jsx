@@ -44,7 +44,7 @@ const Dashboard = () => {
       if (!ctx.loginDetails.isAuthenticated) return;
       try {
         const res = await axios.get(
-          `http://localhost:3300/${ctx.loginDetails.id}/myprofile`
+          `http://localhost:3300/dashboard/${ctx.loginDetails.id}/myprofile`
         );
         setProfileView((prevState) => {
           return { ...prevState, ...res.data[0], isFetched: true };

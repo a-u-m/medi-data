@@ -48,7 +48,7 @@ const UpdateProfile = (props) => {
     ) {
       try {
         const res = await axios.post(
-          `http://localhost:3300/profileupdate`,
+          `http://localhost:3300/dashboard/profileupdate`,
           updateData
         );
         if (res.data.affectedRows) {
