@@ -12,6 +12,7 @@ const db = mysql.createPool({
   user: process.env.DBUSER,
   password: process.env.DBPASSWORD,
   database: process.env.DATABASE,
+  multipleStatements: true,
 });
 
 app.use(express.json());
@@ -129,9 +130,20 @@ app.get("/:patientId/myprofile", (req, res) => {
 });
 
 app.get("/:patientId/appointmentDetails", (req, res) => {
+  const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query1 = "SELECT * FROM doctor_appointment WHERE patient_id = ?;";
+  const query2 =
+    "SELECT COUNT(*) as totalAppoint,SUM(cost) as sumCost FROM doctor_appointment WHERE patient_id=?;";
+  const query3 =
+    "SELECT COUNT(*) as pendingAppoint FROM doctor_appointment WHERE patient_id=? AND appointSchedule >= ?;";
   db.query(
-    "SELECT * FROM doctor_appointment WHERE patient_id = ?;",
-    [req.params.patientId],
+    query1 + query2 + query3,
+    [
+      req.params.patientId,
+      req.params.patientId,
+      req.params.patientId,
+      currentDate,
+    ],
     (err, result) => {
       if (err) res.status(400).send({ message: "err" });
       else res.send(result);

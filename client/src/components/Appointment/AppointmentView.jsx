@@ -99,10 +99,16 @@ const AppointmentView = (props) => {
                         Overview
                       </div>
                       <div className="p-2 font-[600]">
-                        Pending appointments:
+                        Pending appointments:{" "}
+                        {appointmentData.data[2][0].pendingAppoint}
                       </div>
-                      <div className="p-2 font-[600]">Total appointments:</div>
-                      <div className=" p-2 font-[600]">Total Cost:</div>
+                      <div className="p-2 font-[600]">
+                        Total appointments:{" "}
+                        {appointmentData.data[1][0].totalAppoint}
+                      </div>
+                      <div className=" p-2 font-[600]">
+                        Total Cost: {appointmentData.data[1][0].sumCost}
+                      </div>
                     </div>
                   </div>
                   <div className="flex-auto w-[70%]">
@@ -127,7 +133,7 @@ const AppointmentView = (props) => {
                       </div>
                       <div className="rounded  flex-auto m-1 w-[5%] flex justify-center items-center"></div>
                     </div>
-                    {appointmentData.data.map((info) => {
+                    {appointmentData.data[0].map((info) => {
                       return (
                         <AppointmentCard
                           info={info}
