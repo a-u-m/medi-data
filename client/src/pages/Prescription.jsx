@@ -22,7 +22,7 @@ const Prescription = () => {
             <Navbar />
             <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
                 <Container centerContent  >
-                    <Heading m='3rem'>Drugs Prescription</Heading>
+                    <Heading m='3rem' fontWeight='normal'>Drugs Prescription</Heading>
                     {preDisplay(preState)}
                     <Image src='add.png' position='fixed' right='4vw' top='83vh' boxSize='70px' onClick={addHandler} ></Image>
                 </Container>

@@ -28,7 +28,7 @@ app.post("/login", (req, res) => {
     if (err) res.status(400).send({ message: "err" });
     else res.send(result);
   });
-});
+}); 
 
 app.post("/register", (req, res) => {
   const errors = { err1: false, err2: false };
@@ -209,7 +209,69 @@ app.post("/prescription/delete", (req, res) => {
     }
   });
 });
+//Medical test api
+app.get("/test/:id", (req, res) => {
+  const id = req.params.id;
+  const TQuery = "select * from test where patient_id=?;";
+  db.query(TQuery, [id], (err, result) => {
+    if (result.length == 0) {
+      res.send([0]);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.post("/test/delete", (req, res) => {
+  const delquery = "delete from test where Test_id=?;";
+  db.query(delquery, [req.body.Test_id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("success server");
+      res.send("nice");
+    }
+  });
+});
+app.post("/test/add/:id", (req, res) => {
+  const addQuery = "insert into test values(?,?,?,?,?,?,?,?);";
+  db.query(
+    addQuery,
+    [
+      req.body.Test_id,
+      req.body.Treatment_provider,
+      req.body.Test_title,
+      req.body.Doctor_name,
+      req.body.Result,
+      req.body.cost,
+      req.params.id,
+      req.body.date
+    ],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    }
+  );
+});
+app.get("/test/overview/:id",(req,res)=>{
+  const id=req.params.id;
+  const q1="Select count(*) as total from test where patient_id=?;";
+  const q2="Select count(*) as positive from test where patient_id=? and Result='positive';";
+  const q3="Select count(*) as negative from test where patient_id=? and Result='negative';";
+  db.query(q1+q2+q3,[id,id,id],(err,result)=>{
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.send(result);
 
+   
+    }
+  })
+});
 app.listen(3300, () => {
   console.log("Express Server 3300");
 });
