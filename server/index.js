@@ -112,7 +112,6 @@ app.post("/profileupdate", (req, res) => {
       data.patient_id,
     ],
     (err, result) => {
-      console.log(result);
       err ? res.status(400).send("error") : res.send(result);
     }
   );
@@ -162,6 +161,49 @@ app.post("/api/exCredentials", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Base");
 });
+
+//Vaccination API
+app.get("/vaccination/:patientId/", (req, res) => {
+  // const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query1 = "SELECT * FROM vaccination WHERE patient_id = ?;";
+  db.query(query1, [req.params.patientId], (err, result) => {
+    if (err) res.status(400).send({ message: "err" });
+    else res.send(result);
+  });
+});
+
+app.delete("/vaccination/:vaccinationId", (req, res) => {
+  const sqlQuery = "DELETE FROM vaccination WHERE Vaccination_id=?;";
+  db.query(sqlQuery, [req.params.vaccinationId], (err, result) => {
+    if (err) res.status(400).send({ message: "error" });
+    else res.send(result);
+  });
+});
+
+app.post(`/vaccination/add`, (req, res) => {
+  const data = req.body;
+  const sqlQuery = "INSERT INTO vaccination VALUES(?,?,?,?,?,?,?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      data.vaccination_id,
+      data.patient_id,
+      data.vaccination_name,
+      data.vac_update_date,
+      parseInt(data.vac_cost),
+      parseInt(data.dose_no),
+      parseInt(data.net_doses),
+      data.type,
+      data.vac_for,
+      data.vaccination_date,
+    ],
+    (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
 //Prescription API
 app.get("/prescription/:id", (req, res) => {
   const id = req.params.id;

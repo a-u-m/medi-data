@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { Navigate, useActionData } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import VaccinationMain from "../components/Vaccination/VaccinationMain";
 
-const Vaccination = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  useEffect(() => {
-    const ls = localStorage.getItem("loginState");
-    if (ls === null) {
-      setIsAuthenticated(false);
-    } else {
-      setIsAuthenticated(JSON.parse(ls).isAuthenticated);
-    }
-  }, []);
+const Appointment = () => {
   return (
-    <>
-      {!isAuthenticated ? (
-        <Navigate replace to="/login" />
-      ) : (
-        <>
-          <Navbar />
-          
-        </>
-      )}
-    </>
+    <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
+      <Navbar />
+      <VaccinationMain />
+    </div>
   );
 };
 
-export default Vaccination;
+export default Appointment;
