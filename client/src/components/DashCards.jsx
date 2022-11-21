@@ -13,9 +13,12 @@ const DashCards = () => {
   const navigate = useNavigate();
   return (
     <>
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer p-3" onClick={() => {
-        navigate("/prescription");
-      }}>
+      <CardA
+        style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer p-3"
+        onClick={() => {
+          navigate("/prescription");
+        }}
+      >
         <div className=" flex flex-row items-center">
           <img src={prescriptionIcon} width="28px" />
           <div className="ml-2">Prescriptions</div>
@@ -34,15 +37,20 @@ const DashCards = () => {
         </div>
       </CardA>
 
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer">
+      <CardA
+        style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer"
+        onClick={() => {
+          navigate("/physicals");
+        }}
+      >
         <div className=" flex flex-row items-center">
           <img src={traitIcon} width="28px" />
-          <div className="ml-2">Physical traits and Vitals</div>
+          <div className="ml-2">Physical traits</div>
         </div>
         <div className="flex flex-col items-center pl-5 pr-5 text-[1.1rem]">
           <div className="text-center">
-            See or update details like Height, Weight, Sugar Level and Blood
-            Pressure for a particular day.
+            See or update your physical details like height, weight and other
+            features.
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
@@ -87,7 +95,12 @@ const DashCards = () => {
         </div>
       </CardA>
 
-      <CardA style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer">
+      <CardA
+        style="flex flex-col p-3 justify-between hover:bg-[#f2f2f2] cursor-pointer"
+        onClick={() => {
+          navigate("/test");
+        }}
+      >
         <div className=" flex flex-row items-center">
           <img src={testIcon} width="28px" />
           <div className="ml-2">Medical Tests</div>

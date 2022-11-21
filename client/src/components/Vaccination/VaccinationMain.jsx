@@ -19,6 +19,9 @@ const VaccinationMain = (props) => {
   const [state, setState] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [vaccineUpdateView, setVaccineUpdateView] = useState(false);
+
+  console.log(vaccinedata.data);
+
   const closeModal = () => {
     setModalDetails({ isVisible: false, title: "", type: "" });
   };
@@ -119,9 +122,11 @@ const VaccinationMain = (props) => {
                       </div>
                       <div className="p-2 font-[600]">
                         Vaccinations Undertaken:{" "}
+                        {vaccinedata.data[1][0].totalVaccination}
                       </div>
                       <div className="p-2 font-[600]">
                         Net Vaccination Cost:{" "}
+                        {vaccinedata.data[1][0].vacTotalCost}
                       </div>
                       <div className=" p-2 font-[600]"></div>
                     </div>
@@ -151,7 +156,7 @@ const VaccinationMain = (props) => {
                       </div>
                       <div className="rounded  flex-auto m-1 w-[5%] flex justify-center items-center"></div>
                     </div>
-                    {vaccinedata.data.map((info) => {
+                    {vaccinedata.data[0].map((info) => {
                       return (
                         <VaccinationCard
                           info={info}
