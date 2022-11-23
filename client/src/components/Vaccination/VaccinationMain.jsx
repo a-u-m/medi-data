@@ -20,8 +20,6 @@ const VaccinationMain = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [vaccineUpdateView, setVaccineUpdateView] = useState(false);
 
-  console.log(vaccinedata.data);
-
   const closeModal = () => {
     setModalDetails({ isVisible: false, title: "", type: "" });
   };
@@ -75,6 +73,7 @@ const VaccinationMain = (props) => {
     };
     fetchVaccineData();
   }, [loginDetails, vaccineUpdateView, state]);
+  console.log(vaccinedata.data.length)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -92,7 +91,7 @@ const VaccinationMain = (props) => {
           />
         ) : (
           <>
-            {vaccinedata.data.length ? (
+            {vaccinedata.data[0].length ? (
               <div className="flex-auto flex flex-col">
                 <dir className=" mt-1 mb-1 text-[2rem]">Vaccination</dir>
                 <div className="flex-1 flex flex-row justify-center  ml-[2%] mr-[2%]">
