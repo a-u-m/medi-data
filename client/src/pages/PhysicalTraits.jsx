@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate, useActionData } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import VaccinationMain from "../components/Vaccination/VaccinationMain";
+import PhysicalsMain from "../components/Physicals/PhysicalsMain";
 
-const Appointment = () => {
+const PhysicalTraits = () => {
   return (
     <div className="w-full flex flex-col h-screen bg-[#ebebeb]">
       <Navbar />
-      <VaccinationMain />
+      <PhysicalsMain />
     </div>
   );
 };
 
-export default Appointment;
+export default PhysicalTraits;

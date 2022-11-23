@@ -28,7 +28,7 @@ app.post("/login", (req, res) => {
     if (err) res.status(400).send({ message: "err" });
     else res.send(result);
   });
-}); 
+});
 
 app.post("/register", (req, res) => {
   const errors = { err1: false, err2: false };
@@ -112,7 +112,6 @@ app.post("/profileupdate", (req, res) => {
       data.patient_id,
     ],
     (err, result) => {
-      console.log(result);
       err ? res.status(400).send("error") : res.send(result);
     }
   );
@@ -162,6 +161,66 @@ app.post("/api/exCredentials", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Base");
 });
+
+//Vaccination API
+app.get("/vaccination/:patientId/", (req, res) => {
+  // const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query1 = "SELECT * FROM vaccination WHERE patient_id = ?;";
+  const query2 =
+    "SELECT COUNT(*) as totalVaccination,SUM(vac_cost) as vacTotalCost FROM vaccination WHERE patient_id=?;";
+  db.query(
+    query1 + query2,
+    [req.params.patientId, req.params.patientId],
+    (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
+app.delete("/vaccination/:vaccinationId", (req, res) => {
+  const sqlQuery = "DELETE FROM vaccination WHERE Vaccination_id=?;";
+  db.query(sqlQuery, [req.params.vaccinationId], (err, result) => {
+    if (err) res.status(400).send({ message: "error" });
+    else res.send(result);
+  });
+});
+
+app.post(`/vaccination/add`, (req, res) => {
+  const data = req.body;
+  const sqlQuery = "INSERT INTO vaccination VALUES(?,?,?,?,?,?,?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      data.vaccination_id,
+      data.patient_id,
+      data.vaccination_name,
+      data.vac_update_date,
+      parseInt(data.vac_cost),
+      parseInt(data.dose_no),
+      parseInt(data.net_doses),
+      data.type,
+      data.vac_for,
+      data.vaccination_date,
+    ],
+    (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
+//Physical API
+
+app.get("/physical/:patientId/", (req, res) => {
+  // const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const query1 = "SELECT * FROM measurements WHERE patient_id = ?;";
+  db.query(query1, [req.params.patientId], (err, result) => {
+    if (err) res.status(400).send({ message: "err" });
+    else res.send(result);
+  });
+});
+
 //Prescription API
 app.get("/prescription/:id", (req, res) => {
   const id = req.params.id;
@@ -244,7 +303,7 @@ app.post("/test/add/:id", (req, res) => {
       req.body.Result,
       req.body.cost,
       req.params.id,
-      req.body.date
+      req.body.date,
     ],
     (err, result) => {
       if (err) {
@@ -256,21 +315,20 @@ app.post("/test/add/:id", (req, res) => {
     }
   );
 });
-app.get("/test/overview/:id",(req,res)=>{
-  const id=req.params.id;
-  const q1="Select count(*) as total from test where patient_id=?;";
-  const q2="Select count(*) as positive from test where patient_id=? and Result='positive';";
-  const q3="Select count(*) as negative from test where patient_id=? and Result='negative';";
-  db.query(q1+q2+q3,[id,id,id],(err,result)=>{
-    if(err){
+app.get("/test/overview/:id", (req, res) => {
+  const id = req.params.id;
+  const q1 = "Select count(*) as total from test where patient_id=?;";
+  const q2 =
+    "Select count(*) as positive from test where patient_id=? and Result='positive';";
+  const q3 =
+    "Select count(*) as negative from test where patient_id=? and Result='negative';";
+  db.query(q1 + q2 + q3, [id, id, id], (err, result) => {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       res.send(result);
-
-   
     }
-  })
+  });
 });
 
 //Past Diseases

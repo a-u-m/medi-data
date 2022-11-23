@@ -9,6 +9,7 @@ import Appointment from "./pages/Appointment";
 import Prescription from "./pages/Prescription";
 import Test from "./pages/Test";
 import Disease from "./pages/Disease";
+import PhysicalTraits from "./pages/PhysicalTraits";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { LoginProvider } from "./components/contexts/LoginContext";
@@ -19,9 +20,6 @@ const App = () => {
 
   return (
     <LoginProvider>
-      {/* {!dashDisplay && <Login loginDataHandler={loginDataHandler} />}
-      {dashDisplay && <Dashboard basicDetails={verifiedLoginDetails} />}
-      <div></div> */}
       <Routes>
         <Route path="/" exact element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
@@ -31,7 +29,7 @@ const App = () => {
         <Route path="/prescription" element={<Prescription/>} />
         <Route path="/test" element={<Test/>} />
         <Route path="/disease" element={<Disease/>} />
-   
+        <Route path="/physicals" element={<PhysicalTraits />} />
       </Routes>
     </LoginProvider>
   );
