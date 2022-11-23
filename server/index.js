@@ -272,6 +272,31 @@ app.get("/test/overview/:id",(req,res)=>{
     }
   })
 });
+
+//Past Diseases
+app.get("/disease/:id", (req, res) => {
+  const id = req.params.id;
+  const PQuery = "select * from past_diseases where patient_id=?;";
+  db.query(PQuery, [id], (err, result) => {
+    if (result.length == 0) {
+      res.send([0]);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.post("/disease/delete", (req, res) => {
+  const delquery = "delete from past_diseases where disease_id=?;";
+  db.query(delquery, [req.body.disease_id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("success server");
+      res.send("nice");
+    }
+  });
+});
+
 app.listen(3300, () => {
   console.log("Express Server 3300");
 });

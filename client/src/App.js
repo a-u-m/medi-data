@@ -8,6 +8,7 @@ import Vaccination from "./pages/Vaccination";
 import Appointment from "./pages/Appointment";
 import Prescription from "./pages/Prescription";
 import Test from "./pages/Test";
+import Disease from "./pages/Disease";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { LoginProvider } from "./components/contexts/LoginContext";
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/prescription" element={<Prescription/>} />
         <Route path="/test" element={<Test/>} />
+        <Route path="/disease" element={<Disease/>} />
    
       </Routes>
     </LoginProvider>
