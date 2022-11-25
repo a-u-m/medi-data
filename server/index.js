@@ -354,6 +354,19 @@ app.post("/disease/delete", (req, res) => {
     }
   });
 });
+app.post("/disease/add/:id",(req,res)=>{
+  const id=req.params.id;
+  const pdata=req.body;
+  const pAdd="insert into past_diseases values(?,?,?,?,?,?)";
+  db.query(pAdd,[pdata.disease_id,pdata.disease_name,pdata.disease_type,pdata.doctor_consulted,id,pdata.date],(err,result)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.send("success");
+    }
+  })
+
+})
 
 app.listen(3300, () => {
   console.log("Express Server 3300");

@@ -73,7 +73,6 @@ const VaccinationMain = (props) => {
     };
     fetchVaccineData();
   }, [loginDetails, vaccineUpdateView, state]);
-  console.log(vaccinedata.data.length)
 
   useEffect(() => {
     if (!isAuthenticated) {
