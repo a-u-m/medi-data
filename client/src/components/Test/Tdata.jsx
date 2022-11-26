@@ -9,6 +9,8 @@ import {
     Td,
     TableCaption,
     TableContainer,
+    Select,
+    VStack
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -24,7 +26,6 @@ const Tdetails = (prop) => {
                 `http://localhost:3300/test/${localData.id}`
             );
             setTData(tempT.data);
-            console.log(TData);
         } catch (err) {
             console.log(err);
         }
@@ -51,6 +52,28 @@ const Tdetails = (prop) => {
             console.log(err);
         }
     };
+    const selectHandler = async (e) => {
+        try {
+            if (e.target.value === 'option1') {
+                const temp = await axios.get(`http://localhost:3300/test/recent/${localData.id}`);
+                setTData(temp.data);
+            }
+            else if (e.target.value === 'option2') {
+                const temp = await axios.get(`http://localhost:3300/test/positive/${localData.id}`);
+                setTData(temp.data);
+
+            }
+            else if (e.target.value === 'option3') {
+                const temp = await axios.get(`http://localhost:3300/test/negative/${localData.id}`);
+                setTData(temp.data);
+            }
+
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
     useEffect(() => {
         fetchT(localData);
         TOverview(localData);
@@ -82,14 +105,30 @@ const Tdetails = (prop) => {
                 ) :
                     <>
                         <Heading pl='2rem' pt='1rem' pb='1rem' fontWeight='normal'>Medical Test</Heading>
-                        <Box pl='2rem' pr='2rem' display='flex' justifyContent='space-between' w='100%' >
-                            <Box w='28%' h={['40vh', '30vh', '25vh']} bg='white' borderRadius='5px' >
-                                <Heading fontWeight='normal' fontSize='xl' m='1rem'>Overview</Heading>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Medical Tests: {Overview.total}</Text>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Positive Results: {Overview.positive}</Text>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Negative Results: {Overview.negative}</Text>
 
-                            </Box>
+
+                        <Box pl='2rem' pr='2rem' display='flex' justifyContent='space-between' w='100%' >
+                            <VStack w='28%' h={['40vh', '30vh', '25vh']}>
+                                <Select placeholder='Select option' w='100%' bg='white' onClick={selectHandler}>
+                                    <option value='option1' >Most recent</option>
+                                    <option value='option2'>Positive</option>
+                                    <option value='option3'>Negative</option>
+                                </Select>
+
+                                <Box bg='white' borderRadius='5px' w='100%' p='10px'>
+                                    <Heading fontWeight='normal' fontSize='xl' m='5px'>Overview</Heading>
+                                    <Text ml='5px' mt='0.5rem' fontWeight='medium'>Total Number of Medical Tests: {Overview.total}</Text>
+                                    <Text ml='5px' mt='0.5rem' fontWeight='medium'>Total Number of Positive Results: {Overview.positive}</Text>
+                                    <Text ml='5px' mt='0.5rem' fontWeight='medium'>Total Number of Negative Results: {Overview.negative}</Text>
+
+                                </Box>
+
+                            </VStack>
+
+
+
+
+
                             <Table w='71%' style={{ borderSpacing: '0 5px', borderCollapse: 'separate' }} h='40px'>
 
                                 <Thead>

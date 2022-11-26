@@ -234,7 +234,7 @@ app.get("/prescription/:id", (req, res) => {
   });
 });
 app.post("/prescription/add/:id", (req, res) => {
-  const addQuery = "insert into drugs_prescription values(?,?,?,?,?,?,?);";
+  const addQuery = "insert into drugs_prescription values(?,?,?,?,?,?,?,sysdate());";
   db.query(
     addQuery,
     [
@@ -330,6 +330,52 @@ app.get("/test/overview/:id", (req, res) => {
     }
   });
 });
+app.get("/test/recent/:id",(req,res)=>{
+
+  const id=req.params.id;
+  const recentQuery="select * from test where patient_id=? order by date desc";
+  db.query(recentQuery,[id],(err,result)=>{
+    if(err){
+      console.log(err);
+    }else{
+      res.send(result);
+    }
+  })
+})
+app.get("/test/positive/:id",(req,res)=>{
+
+  const id=req.params.id;
+  const recentQuery="select * from test where patient_id=? and Result='positive'";
+  db.query(recentQuery,[id],(err,result)=>{
+    if(err){
+      console.log(err);
+    }else{
+      if(result.length==0){
+        res.send([0]);
+      }else{
+        res.send(result);
+      }
+      
+    }
+  })
+})
+app.get("/test/negative/:id",(req,res)=>{
+
+  const id=req.params.id;
+  const recentQuery="select * from test where patient_id=? and Result='negative'";
+  db.query(recentQuery,[id],(err,result)=>{
+    if(err){
+      console.log(err);
+    }else{
+      if(result.length==0){
+        res.send([0]);
+      }else{
+        res.send(result);
+      }
+      
+    }
+  })
+})
 
 //Past Diseases
 app.get("/disease/:id", (req, res) => {
