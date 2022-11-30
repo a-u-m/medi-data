@@ -37,7 +37,7 @@ app.post("/register", (req, res) => {
   const loginRegisterQuery =
     "INSERT INTO login_details VALUES( ? , ? , ? , ? );";
   const personalRegisterQuery =
-    "INSERT INTO patient_details VALUES( ? , ? , ? , ? , ? , ? )";
+    "INSERT INTO patient_details VALUES( ? , ? , ? , ? , ? , ? ,?,?,?)";
   db.query(
     loginRegisterQuery,
     [login.patient_id, login.username, login.password, login.registrationDate],
@@ -54,6 +54,9 @@ app.post("/register", (req, res) => {
       parseInt(personal.age),
       personal.contact,
       personal.email,
+      null,
+      null,
+      null
     ],
     (err, result) => {
       err ? console.log(err) : res.send(result);
@@ -220,6 +223,48 @@ app.get("/physical/:patientId/", (req, res) => {
     else res.send(result);
   });
 });
+
+app.post(`/physical/add`, (req, res) => {
+  const data = req.body;
+  const sqlQuery = "INSERT INTO measurements VALUES(?,?,?,?,?)";
+  db.query(
+    sqlQuery,
+    [
+      data.height,
+      data.weight,
+      data.disability,
+      data.blood_grp,
+      data.patient_id,
+    ],
+    (err, result) => {
+      console.log(err);
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
+
+app.post("/physical/update", (req, res) => {
+  const data = req.body;
+  const sqlQuery =
+    "UPDATE measurements SET Height=?,Weight=?,disability=?,blood_group=? WHERE patient_id=?";
+  db.query(
+    sqlQuery,
+    [
+      data.height,
+      data.weight,
+      data.disability,
+      data.blood_grp,
+      data.patient_id
+    ],
+    (err, result) => {
+      console.log(err)
+      err ? res.status(400).send("error") : res.send(result);
+    }
+  );
+});
+
 
 //Prescription API
 app.get("/prescription/:id", (req, res) => {
