@@ -4,8 +4,8 @@ import medicalIcon from "../assets/medical-appointment2.png";
 
 const DashAppointment = (props) => {
   return (
-    <CardA style="basis-1/4 flex flex-col p-3">
-      <div className="basis-1/12 flex items-center">
+    <CardA style="basis-1/4 flex flex-col p-3 relative">
+      <div className="basis-1/12 flex">
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -18,8 +18,13 @@ const DashAppointment = (props) => {
             clip-rule="evenodd"
           />
         </svg> */}
-        <img src={medicalIcon} width="28px" />
-        <div className="ml-2">Upcoming Appointment</div>
+        <div className="flex flex-row">
+          <img src={medicalIcon} width="28px" />
+          <div className="ml-2">Upcoming Appointment</div>
+        </div>
+        <p className="text-center absolute top-[50%] left-[25%]">
+          No Upcoming Appointment
+        </p>
       </div>
     </CardA>
   );
