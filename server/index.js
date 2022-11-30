@@ -37,7 +37,7 @@ app.post("/register", (req, res) => {
   const loginRegisterQuery =
     "INSERT INTO login_details VALUES( ? , ? , ? , ? );";
   const personalRegisterQuery =
-    "INSERT INTO patient_details VALUES( ? , ? , ? , ? , ? , ? )";
+    "INSERT INTO patient_details VALUES( ? , ? , ? , ? , ? , ? ,?,?,?)";
   db.query(
     loginRegisterQuery,
     [login.patient_id, login.username, login.password, login.registrationDate],
@@ -54,6 +54,9 @@ app.post("/register", (req, res) => {
       parseInt(personal.age),
       personal.contact,
       personal.email,
+      null,
+      null,
+      null
     ],
     (err, result) => {
       err ? console.log(err) : res.send(result);
