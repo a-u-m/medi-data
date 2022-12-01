@@ -23,6 +23,20 @@ const Dashboard = () => {
       return !prevState;
     });
   };
+  const [dates, setdates] = useState([]);
+  const fetchdates = async () => {
+    try {
+      const temp = await axios.get("http://localhost:3300/dates");
+      console.log(temp.data);
+      setdates(temp.data);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    fetchdates();
+  }, [])
 
   useEffect(() => {
     if (!ctx.loginDetails.isAuthenticated) return;
@@ -38,6 +52,7 @@ const Dashboard = () => {
       setIsAuthenticated(JSON.parse(ld).isAuthenticated);
     }
   }, []);
+
 
   useEffect(() => {
     const fetchPd = async () => {
@@ -58,7 +73,7 @@ const Dashboard = () => {
 
   return (
     <React.Fragment>
-      {isAuthenticated === false ? (
+      {isAuthenticated === false && dates.length != 0 ? (
         <Navigate replace to="/login" />
       ) : (
         <>
@@ -67,7 +82,7 @@ const Dashboard = () => {
               <Navbar />
               <div className="flex-1 flex flex-col-reverse md:flex-row">
                 <div className="basis-2/3 grid grid-cols-2  lg:grid-cols-3  m-2 mr-0">
-                  <DashCards />
+                  <DashCards dates={dates} />
                 </div>
                 <div className="basis-1/3 flex flex-col m-2 ml-0">
                   {profileEdit ? (

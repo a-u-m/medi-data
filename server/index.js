@@ -465,8 +465,13 @@ app.get("/dates",(req,res)=>{
       console.log(err);
     }
     else{
-     
-      res.send(result);
+      if(result.length==0){
+        res.send([0])
+      }else{
+          res.send(result);
+      }
+
+    
     }
   })
 })
