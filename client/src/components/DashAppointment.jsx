@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardA from "./UI/CardA";
 import medicalIcon from "../assets/medical-appointment2.png";
+import axios from "axios";
 
 const DashAppointment = (props) => {
+  const [postData, setPostData] = useState({
+    currDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+    patient_id: JSON.parse(localStorage.getItem("loginState")).id,
+  });
+  const [recieveData, setRecieveData] = useState({});
+  const [isFetched, setIsFetched] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await axios.post(
+        `http://localhost:3300/appointment/upcoming`,
+        postData
+      );
+      console.log(res.data);
+      setRecieveData(res.data[0]);
+      if (res.data.length) {
+        setIsFetched(true);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <CardA style="basis-1/4 flex flex-col p-3 relative">
       <div className="basis-1/12 flex">
@@ -22,9 +44,34 @@ const DashAppointment = (props) => {
           <img src={medicalIcon} width="28px" />
           <div className="ml-2">Upcoming Appointment</div>
         </div>
-        <p className="text-center absolute top-[50%] left-[25%]">
-          No Upcoming Appointment
-        </p>
+      </div>
+      <div className="flex-auto flex flex-col justify-center items-center">
+        {isFetched ? (
+          <>
+            {" "}
+            <div className="flex flex-row justify-around p-3">
+              <div className="font-[500]">Doctor</div>
+              <div className="font-[500]">Appointment on</div>
+            </div>
+            <div className="flex flex-row justify-around p-3">
+              <div className="">{recieveData.doctor_name}</div>
+              <div className="">
+                {new Date(recieveData.appointSchedule).toLocaleDateString(
+                  undefined,
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                  }
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="">no upcoming appointments</div>
+        )}
       </div>
     </CardA>
   );
