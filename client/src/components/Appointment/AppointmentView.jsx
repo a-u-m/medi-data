@@ -88,7 +88,7 @@ const AppointmentView = (props) => {
           />
         ) : (
           <>
-            {appointmentData.data.length ? (
+            {appointmentData.data[0].length ? (
               <div className="flex-auto flex flex-col">
                 <dir className=" mt-1 mb-1 text-[2rem]">Appointments</dir>
                 <div className="flex-1 flex flex-row justify-center  ml-[2%] mr-[2%]">
