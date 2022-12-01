@@ -92,15 +92,9 @@ const Pdata = (prop) => {
                 {PData[0] == 0 ? (<Box w='100vw' fontWeight='normal' mt='18rem' fontSize='lg' textAlign='center'>No Medical History Details</Box>
                 ) :
                     <>
-                        <Heading pl='2rem' pt='1rem' pb='1rem' fontWeight='normal'>Medical History</Heading>
-                        <Box pl='2rem' pr='2rem' display='flex' justifyContent='space-between' w='100%' >
-                            <Box w='28%' h={['40vh', '30vh', '25vh']} bg='white' borderRadius='5px' >
-                                <Heading fontWeight='normal' fontSize='xl' m='1rem'>Overview</Heading>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Medical Tests: {Overview.total}</Text>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Positive Results: {Overview.positive}</Text>
-                                <Text ml='1rem' mt='0.5rem' fontWeight='medium'>Total Number of Negative Results: {Overview.negative}</Text>
+                        <Heading pl='2rem' pt='1rem' pb='1rem' fontWeight='normal' ml='37%'>Medical History</Heading>
+                        <Box pl='2rem' pr='2rem' display='flex' justifyContent='center' w='100%' >
 
-                            </Box>
                             <Table w='71%' style={{ borderSpacing: '0 5px', borderCollapse: 'separate' }} h='40px'>
 
                                 <Thead>

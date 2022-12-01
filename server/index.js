@@ -226,7 +226,7 @@ app.get("/physical/:patientId/", (req, res) => {
 
 app.post(`/physical/add`, (req, res) => {
   const data = req.body;
-  const sqlQuery = "INSERT INTO measurements VALUES(?,?,?,?,?)";
+  const sqlQuery = "INSERT INTO measurements VALUES(?,?,?,?,?,sysdate())";
   db.query(
     sqlQuery,
     [
@@ -448,7 +448,7 @@ app.post("/disease/delete", (req, res) => {
 app.post("/disease/add/:id",(req,res)=>{
   const id=req.params.id;
   const pdata=req.body;
-  const pAdd="insert into past_diseases values(?,?,?,?,?,?)";
+  const pAdd="insert into past_diseases values(?,?,?,?,?,?);";
   db.query(pAdd,[pdata.disease_id,pdata.disease_name,pdata.disease_type,pdata.doctor_consulted,id,pdata.date],(err,result)=>{
     if(err){
       console.log(err);
@@ -457,6 +457,18 @@ app.post("/disease/add/:id",(req,res)=>{
     }
   })
 
+})
+app.get("/dates",(req,res)=>{
+  const query=" select doctor_appointment.appointRegDate,drugs_prescription.date,measurements.date,past_diseases.date,test.date,vaccination.vacUpdateDate from doctor_appointment inner join drugs_prescription on doctor_appointment.patient_id=drugs_prescription.patient_id inner join measurements on drugs_prescription.patient_id = measurements.patient_id inner join past_diseases on measurements.patient_id = past_diseases.patient_id inner join test on past_diseases.patient_id=test.patient_id inner join vaccination on test.patient_id=vaccination.patient_id;";
+  db.query(query,(err,result)=>{
+    if(err){
+      console.log(err);
+    }
+    else{
+     
+      res.send(result);
+    }
+  })
 })
 
 app.listen(3300, () => {

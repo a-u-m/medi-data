@@ -8,9 +8,25 @@ import testIcon from "../assets/blood-sample.png";
 import pcrIcon from "../assets/pcr-test.png";
 import vaccineIcon from "../assets/vaccine.png";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
 const DashCards = () => {
   const navigate = useNavigate();
+  const [dates, setdates] = useState([]);
+  const fetchdates = async () => {
+    try {
+      const temp = await axios.get("http://localhost:3300/dates");
+      console.log(temp.data);
+      setdates(temp.data);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  useEffect(() => {
+    fetchdates();
+  }, [])
   return (
     <>
       <CardA
@@ -33,7 +49,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem] cursor-pointer">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].date}</p>
         </div>
       </CardA>
 
@@ -54,7 +70,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].date}</p>
         </div>
       </CardA>
 
@@ -70,7 +86,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].date}</p>
         </div>
       </CardA>
 
@@ -91,7 +107,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].appointRegDate}</p>
         </div>
       </CardA>
 
@@ -112,7 +128,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].date}</p>
         </div>
       </CardA>
 
@@ -133,7 +149,7 @@ const DashCards = () => {
           </div>
         </div>
         <div className="flex flex-row items-center text-[0.7rem]">
-          <p className="italic">last updated:</p>
+          <p className="italic">last updated:{dates[0].vacUpdateDate}</p>
         </div>
       </CardA>
     </>
