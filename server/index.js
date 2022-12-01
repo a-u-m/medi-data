@@ -73,6 +73,8 @@ app.delete("/appointment/:appointmentId", (req, res) => {
   });
 });
 
+
+
 app.post(`/addAppointment`, (req, res) => {
   const data = req.body;
   const sqlQuery = "INSERT INTO doctor_appointment VALUES(?,?,?,?,?,?,?,?,?)";
@@ -125,6 +127,20 @@ app.get("/:patientId/myprofile", (req, res) => {
     "SELECT * FROM profile_view WHERE patient_id = ?;",
     [req.params.patientId],
     (err, result) => {
+      if (err) res.status(400).send({ message: "err" });
+      else res.send(result);
+    }
+  );
+});
+
+app.post("/appointment/upcoming", (req, res) => {
+  const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  let query = "select * from doctor_appointment where appointSchedule = (select min(appointSchedule) from doctor_appointment where appointSchedule > ? and patient_id = ?);";
+  db.query(
+    query,
+    [ currentDate ,req.body.patient_id],
+    (err, result) => {
+      console.log(err);
       if (err) res.status(400).send({ message: "err" });
       else res.send(result);
     }

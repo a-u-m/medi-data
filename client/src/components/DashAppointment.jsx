@@ -45,17 +45,23 @@ const DashAppointment = (props) => {
           <div className="ml-2">Upcoming Appointment</div>
         </div>
       </div>
-      <div className="flex-auto flex flex-col justify-center items-center">
+      <div className="flex-auto flex flex-col justify-around items-center border-[2px]  rounded">
         {isFetched ? (
           <>
             {" "}
-            <div className="flex flex-row justify-around p-3">
-              <div className="font-[500]">Doctor</div>
-              <div className="font-[500]">Appointment on</div>
+            <div className="flex-auto w-full flex flex-row justify-around p-3">
+              <div className="font-[500] flex-auto w-[50%] text-center">
+                Doctor
+              </div>
+              <div className="font-[500] flex-auto w-[50%] text-center">
+                Appointment on
+              </div>
             </div>
-            <div className="flex flex-row justify-around p-3">
-              <div className="">{recieveData.doctor_name}</div>
-              <div className="">
+            <div className="flex-auto w-full flex flex-row justify-around p-3">
+              <div className="font-[400] flex-auto w-[50%] text-center">
+                {recieveData.doctor_name}
+              </div>
+              <div className="font-[400] flex-auto w-[50%] text-center">
                 {new Date(recieveData.appointSchedule).toLocaleDateString(
                   undefined,
                   {
