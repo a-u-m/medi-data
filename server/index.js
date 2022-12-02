@@ -140,7 +140,7 @@ app.post("/appointment/upcoming", (req, res) => {
     query,
     [ currentDate ,req.body.patient_id],
     (err, result) => {
-      console.log(err);
+   
       if (err) res.status(400).send({ message: "err" });
       else res.send(result);
     }
@@ -456,7 +456,7 @@ app.post("/disease/delete", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("success server");
+   
       res.send("nice");
     }
   });
@@ -475,7 +475,7 @@ app.post("/disease/add/:id",(req,res)=>{
 
 })
 app.get("/dates",(req,res)=>{
-  const query=" select doctor_appointment.appointRegDate,drugs_prescription.date,measurements.date,past_diseases.date,test.date,vaccination.vacUpdateDate from doctor_appointment inner join drugs_prescription on doctor_appointment.patient_id=drugs_prescription.patient_id inner join measurements on drugs_prescription.patient_id = measurements.patient_id inner join past_diseases on measurements.patient_id = past_diseases.patient_id inner join test on past_diseases.patient_id=test.patient_id inner join vaccination on test.patient_id=vaccination.patient_id;";
+  const query=" select doctor_appointment.appointRegDate,drugs_prescription.date,measurements.date,past_diseases.date,test.date,vaccination.vacUpdateDate from doctor_appointment inner join drugs_prescription on doctor_appointment.patient_id=drugs_prescription.patient_id inner join measurements on drugs_prescription.patient_id = measurements.patient_id inner join past_diseases on measurements.patient_id = past_diseases.patient_id inner join test on past_diseases.patient_id=test.patient_id inner join vaccination on test.patient_id=vaccination.patient_id ;";
   db.query(query,(err,result)=>{
     if(err){
       console.log(err);
